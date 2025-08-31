@@ -105,7 +105,7 @@
         .bg-red-100 { background-color: #fee2e2; }
         .bg-orange-100 { background-color: #ffedd5; }
         .bg-teal-100 { background-color: #ccfbf1; }
-        .text-teal-800 { color: #105752; }
+        .text-teal-800 { color: #115e59; }
         
         .text-blue-600 { color: #2563eb; }
         .text-green-600 { color: #16a34a; }
@@ -135,7 +135,7 @@
         .bg-lime-500 { background-color: #84cc16; }
         .bg-teal-500 { background-color: #14b8a6; }
         .bg-slate-500 { background-color: #64748b; }
-        .bg-emerald-500 { background-color: #0b9869; }
+        .bg-emerald-500 { background-color: #10b981; }
         .bg-fuchsia-500 { background-color: #d946ef; }
 
         .text-white { color: #ffffff; }
@@ -193,9 +193,14 @@
 </head>
 <body class="min-h-screen bg-gray-50 font-sans">
     <header class="bg-white shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 py-8 text-center">
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">🎓 資管系資訊</h1>
-            <p class="text-gray-600">歡迎加入資管系大家庭</p>
+        <div class="max-w-7xl mx-auto px-4 py-6 text-center">
+            <div class="flex justify-center items-center gap-4">
+                <img src="S__19333183_0.jpg" alt="NCCUMIS Logo" class="h-16 w-16">
+                <div>
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-800">🎓 資管系資訊</h1>
+                    <p class="text-gray-600 mt-1">歡迎加入資管系大家庭</p>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -257,8 +262,8 @@
                     <div class="flex-shrink-0 w-10 h-10 bg-teal-500 text-white font-bold rounded-full flex items-center justify-center text-lg">2</div>
                     <div class="ml-4">
                         <h5 class="font-semibold text-gray-800">填寫備註</h5>
-                        <p class="text-gray-600">匯款時，請務必在備註欄填寫 <strong class="text-teal-600">「114+你的姓名」</strong>。</p>
-                        <p class="text-sm text-gray-500 mt-1">範例：「114王小明」，以利系學會對帳。</p>
+                        <p class="text-gray-600">匯款時，請務必在備註欄填寫 <strong class="text-teal-600">「你的姓名」</strong>。</p>
+                        <p class="text-sm text-gray-500 mt-1">範例：「王小明」，以利系學會對帳。</p>
                     </div>
                 </div>
                 <div class="flex items-start">
@@ -266,7 +271,7 @@
                     <div class="ml-4">
                         <h5 class="font-semibold text-gray-800">填寫匯款回報表單</h5>
                         <p class="text-gray-600 mb-2">完成匯款後，請務必填寫繳交紀錄表單，留下相關資訊以便聯繫與核對。</p>
-                        <a href="https://forms.gle/UB6AnqM8JBWYnyYo9" target="_blank" 
+                        <a href="https://forms.gle/UB6AnqM8JBWHYnyYo9" target="_blank" 
                            class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
                             點我填寫回報表單
                         </a>
@@ -279,7 +284,7 @@
                 <svg class="w-8 h-8 text-yellow-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path>
                 </svg>
-                繳交系費福利
+                繳交系費の福利
             </h3>
             <p class="text-gray-500 text-sm mb-6 ml-11">(可能調整細節，以實際財務狀況與實收系費為主)</p>
 
@@ -331,11 +336,26 @@
                     <div class="border-l-4 border-yellow-400 pl-4"><strong>里克德義廚房：</strong>主餐折10元</div>
                     <div class="border-l-4 border-yellow-400 pl-4"><strong>嘗相聚：</strong>滿100元送小杯飲料</div>
                     <div class="border-l-4 border-yellow-400 pl-4"><strong>華娜飯盒：</strong>滿100元折5元</div>
-                    <div class="border-l-4 border-yellow-400 pl-4"><strong>飛捷印刷-政大店：</strong>黑白一面8折變為6折，彩色一面6元變為5元</div>
+                    <div class="border-l-4 border-yellow-400 pl-4"><strong>飛捷印刷-政大店：</strong>影印6折，黑白一面75折，彩色一面減1元</div>
                     <div class="border-l-4 border-gray-400 pl-4"><strong>首思義義式餐坊：</strong>待通知</div>
                 </div>
             </div>
-        </div>
+            
+            <div class="mt-10 pt-6 border-t border-gray-200">
+                <h4 class="text-xl font-semibold text-gray-700 mb-4">身份識別貼紙 & 學生卡</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <div>
+                        <p class="text-gray-600 mb-2">有繳交系費者，將會發放身份識別貼紙，貼在學生證背面即可在特約商店享有優惠。</p>
+                        <img src="card.jpg" alt="學生證與識別貼紙範例" class="rounded-lg shadow-md w-60">
+                    </div>
+            
+                    <div>
+                        <p class="text-gray-600 mb-2">貼紙樣式如下：</p>
+                        <img src="mis.jpg" alt="114學年身份識別貼紙" class="rounded-lg shadow-md w-60">
+                    </div>
+                </div>
+            </div>
+            </div>
         <div class="grid mobile-single-col tablet-double-col desktop-triple-col gap-6">
             
             <a href="https://drive.google.com/file/d/1HhDm_SLHInEucC7LfThz1ciPmcSMNHH5/view" class="card-hover bg-white rounded-2xl p-6 shadow-lg border-l-4 border-blue-500 group">
