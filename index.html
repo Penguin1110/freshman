@@ -6,7 +6,7 @@
     <title>資管系資訊</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.3/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -25,7 +25,9 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
         
-        /* 確保基礎樣式在沒有 Tailwind 時也能顯示 */
+        [x-cloak] { display: none !important; }
+
+        /* --- 確保基礎樣式在沒有 Tailwind 時也能顯示 --- */
         .bg-gray-50 { background-color: #f9fafb; }
         .bg-white { background-color: #ffffff; }
         .text-gray-800 { color: #1f2937; }
@@ -42,7 +44,9 @@
         .mb-2 { margin-bottom: 0.5rem; }
         .mb-4 { margin-bottom: 1rem; }
         .mb-6 { margin-bottom: 1.5rem; }
+        .mb-8 { margin-bottom: 2rem; }
         .mr-2 { margin-right: 0.5rem; }
+        .mr-3 { margin-right: 0.75rem; }
         .mr-4 { margin-right: 1rem; }
         .mt-4 { margin-top: 1rem; }
         .mt-12 { margin-top: 3rem; }
@@ -52,6 +56,7 @@
         .mx-auto { margin-left: auto; margin-right: auto; }
         .text-center { text-align: center; }
         .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+        .text-2xl { font-size: 1.5rem; line-height: 2rem; }
         .text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
         .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
         .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
@@ -61,9 +66,15 @@
         .font-medium { font-weight: 500; }
         .min-h-screen { min-height: 100vh; }
         .flex { display: flex; }
+        .items-start { align-items: flex-start; }
         .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
         .w-6 { width: 1.5rem; }
         .h-6 { height: 1.5rem; }
+        .w-8 { width: 2rem; }
+        .h-8 { height: 2rem; }
+        .w-10 { width: 2.5rem; }
+        .h-10 { height: 2.5rem; }
         .w-12 { width: 3rem; }
         .h-12 { height: 3rem; }
         .w-4 { width: 1rem; }
@@ -73,12 +84,15 @@
         
         .grid { display: grid; }
         .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        .grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
         .grid-cols-7 { grid-template-columns: repeat(7, minmax(0, 1fr)); }
         .gap-1 { gap: 0.25rem; }
+        .gap-2 { gap: 0.5rem; }
         .gap-6 { gap: 1.5rem; }
         .gap-8 { gap: 2rem; }
         .space-y-2 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.5rem; }
         .space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: 1rem; }
+        .space-y-6 > :not([hidden]) ~ :not([hidden]) { margin-top: 1.5rem; }
         
         /* 顏色類別 */
         .bg-blue-100 { background-color: #dbeafe; }
@@ -87,6 +101,7 @@
         .bg-pink-100 { background-color: #fce7f3; }
         .bg-yellow-100 { background-color: #fef3c7; }
         .bg-red-100 { background-color: #fee2e2; }
+        .bg-orange-100 { background-color: #ffedd5; }
         
         .text-blue-600 { color: #2563eb; }
         .text-green-600 { color: #16a34a; }
@@ -94,6 +109,8 @@
         .text-pink-600 { color: #db2777; }
         .text-yellow-600 { color: #ca8a04; }
         .text-red-600 { color: #dc2626; }
+        .text-orange-600 { color: #c2410c; }
+        .text-teal-600 { color: #0d9488; }
         
         .border-l-4 { border-left-width: 4px; }
         .border-blue-500 { border-color: #3b82f6; }
@@ -102,7 +119,8 @@
         .border-pink-500 { border-color: #ec4899; }
         .border-yellow-500 { border-color: #eab308; }
         .border-red-500 { border-color: #ef4444; }
-        
+        .border-orange-500 { border-color: #f97316; }
+
         .bg-blue-500 { background-color: #3b82f6; }
         .bg-green-500 { background-color: #22c55e; }
         .bg-purple-500 { background-color: #a855f7; }
@@ -128,7 +146,8 @@
         .group:hover .group-hover\:bg-pink-200 { background-color: #fbcfe8; }
         .group:hover .group-hover\:bg-yellow-200 { background-color: #fde68a; }
         .group:hover .group-hover\:bg-red-200 { background-color: #fecaca; }
-        
+        .group:hover .group-hover\:bg-orange-200 { background-color: #fed7aa; }
+
         /* 響應式設計 - 重要！！！ */
         @media (max-width: 639px) {
             /* 手機版 */
@@ -153,56 +172,18 @@
             .md\:text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
         }
 
-        /* --- 日曆 CSS 最終修正 --- */
-        .calendar-grid-container {
-            position: relative;
-        }
-        
-        .calendar-day {
-            position: relative; /* 讓長條可以相對於日期格定位 */
-            z-index: 1;
-            padding-top: 0.5rem;
-            min-height: 6rem; /* 確保儲存格有足夠高度容納事件長條 */
-        }
-
-        /* 事件長條基礎樣式 */
-        .event-bar {
-            position: absolute; 
-            height: 0.75rem; /* 長條高度 */
-            z-index: 5; 
-        }
-        
-        /* 使用 top 屬性來做垂直堆疊 */
+        /* --- 日曆 CSS --- */
+        .calendar-grid-container { position: relative; }
+        .calendar-day { position: relative; z-index: 1; padding-top: 0.5rem; min-height: 6rem; }
+        .event-bar { position: absolute; height: 0.75rem; z-index: 5; }
         .event-bar-row-1 { top: 2.2rem; }
         .event-bar-row-2 { top: 3.2rem; }
         .event-bar-row-3 { top: 4.2rem; }
         .event-bar-row-4 { top: 5.2rem; }
-
-        /* 連續長條的關鍵樣式 */
-        .event-bar-start {
-            left: 4px; /* 左邊留白 */
-            right: 0;
-            border-top-left-radius: 999px;
-            border-bottom-left-radius: 999px;
-        }
-        .event-bar-middle {
-            left: 0;
-            right: 0;
-            border-radius: 0; /* 中間部分無圓角 */
-        }
-        .event-bar-end {
-            left: 0;
-            right: 4px; /* 右邊留白 */
-            border-top-right-radius: 999px;
-            border-bottom-right-radius: 999px;
-        }
-        /* 單日活動 */
-        .event-bar-single {
-            left: 4px;
-            right: 4px;
-            border-radius: 999px;
-        }
-        /* --- 修正結束 --- */
+        .event-bar-start { left: 4px; right: 0; border-top-left-radius: 999px; border-bottom-left-radius: 999px; }
+        .event-bar-middle { left: 0; right: 0; border-radius: 0; }
+        .event-bar-end { left: 0; right: 4px; border-top-right-radius: 999px; border-bottom-right-radius: 999px; }
+        .event-bar-single { left: 4px; right: 4px; border-radius: 999px; }
     </style>
 </head>
 <body class="min-h-screen bg-gray-50 font-sans">
@@ -214,6 +195,80 @@
     </header>
 
     <main class="max-w-6xl mx-auto px-4 py-12">
+        
+        <div class="bg-white rounded-2xl p-8 shadow-lg mb-12">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                <svg class="w-8 h-8 text-teal-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+                系費繳交通知
+            </h3>
+            
+            <div class="bg-red-100 border-l-4 border-red-500 text-red-800 p-6 rounded-lg mb-8" 
+                 x-data="countdown('2025-09-12T23:59:59')">
+                <h4 class="font-bold text-xl mb-2">🐦 早鳥優惠倒數中！</h4>
+                <p class="mb-4">於 <strong class="underline">9/12 (五) 23:59</strong> 前完成匯款，即享早鳥價 <strong class="text-2xl font-bold">550元</strong>（原價 600 元）！</p>
+                <div class="bg-white rounded-lg p-4 text-center shadow-inner">
+                    <div x-show="!isExpired">
+                        <p class="text-sm text-gray-600 mb-2">距離優惠截止還有</p>
+                        <div class="grid grid-cols-4 gap-2 text-gray-800">
+                            <div>
+                                <span x-text="days" class="text-3xl font-bold tracking-tight"></span>
+                                <span class="text-xs block">天</span>
+                            </div>
+                            <div>
+                                <span x-text="hours" class="text-3xl font-bold tracking-tight"></span>
+                                <span class="text-xs block">時</span>
+                            </div>
+                            <div>
+                                <span x-text="minutes" class="text-3xl font-bold tracking-tight"></span>
+                                <span class="text-xs block">分</span>
+                            </div>
+                            <div>
+                                <span x-text="seconds" class="text-3xl font-bold tracking-tight"></span>
+                                <span class="text-xs block">秒</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div x-show="isExpired" x-cloak class="text-xl font-bold text-red-600 py-4">
+                        早鳥優惠已截止！
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="text-xl font-semibold text-gray-700 mb-4">繳費步驟</h4>
+            <div class="space-y-6">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 w-10 h-10 bg-teal-500 text-white font-bold rounded-full flex items-center justify-center text-lg">1</div>
+                    <div class="ml-4">
+                        <h5 class="font-semibold text-gray-800">匯款至指定帳戶</h5>
+                        <div class="mt-1 text-gray-600 bg-gray-100 p-3 rounded-md inline-block text-left">
+                            <p><strong>郵局代碼：</strong> 700</p>
+                            <p><strong>帳號：</strong> 0002717-0587267</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 w-10 h-10 bg-teal-500 text-white font-bold rounded-full flex items-center justify-center text-lg">2</div>
+                    <div class="ml-4">
+                        <h5 class="font-semibold text-gray-800">填寫備註</h5>
+                        <p class="text-gray-600">匯款時，請務必在備註欄填寫 <strong class="text-teal-600">「114+你的姓名」</strong>。</p>
+                        <p class="text-sm text-gray-500 mt-1">範例：「114王小明」，以利系學會對帳。</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 w-10 h-10 bg-teal-500 text-white font-bold rounded-full flex items-center justify-center text-lg">3</div>
+                    <div class="ml-4">
+                        <h5 class="font-semibold text-gray-800">填寫匯款回報表單</h5>
+                        <p class="text-gray-600 mb-2">完成匯款後，請務必填寫繳交紀錄表單，留下相關資訊以便聯繫與核對。</p>
+                        <a href="https://forms.gle/UB6AnqM8JBWHYnyYo9" target="_blank" 
+                           class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                            點我填寫回報表單
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="grid mobile-single-col tablet-double-col desktop-triple-col gap-6">
             
             <a href="https://drive.google.com/file/d/1HhDm_SLHInEucC7LfThz1ciPmcSMNHH5/view" class="card-hover bg-white rounded-2xl p-6 shadow-lg border-l-4 border-blue-500 group">
@@ -259,7 +314,6 @@
                     </div>
                 </div>
             </a>
-
             
             <a href="https://line.me/ti/g/yeeDu4zjTx" class="card-hover bg-white rounded-2xl p-6 shadow-lg border-l-4 border-purple-500 group">
                 <div class="flex items-center mb-4">
@@ -301,8 +355,8 @@
                     </div>
                 </div>
             </a>
-                    </div>
-            
+        </div>
+        
         <div class="grid mobile-single-col desktop-double-col gap-8 mt-12">
             
             <div class="bg-white rounded-2xl p-6 shadow-lg">
@@ -313,112 +367,17 @@
                     重要時程
                 </h3>
                 
-                <div x-data="{ currentMonth: 8 }" class="space-y-4">
-                    <div class="flex items-center justify-between mb-4">
-                        <button @click="currentMonth = 8" :class="{'bg-blue-500 text-white': currentMonth === 8, 'bg-gray-200 text-gray-700': currentMonth !== 8}" class="px-4 py-2 rounded-full font-medium transition-colors">8月</button>
-                        <button @click="currentMonth = 9" :class="{'bg-blue-500 text-white': currentMonth === 9, 'bg-gray-200 text-gray-700': currentMonth !== 9}" class="px-4 py-2 rounded-full font-medium transition-colors">9月</button>
-                    </div>
-
-                    <!-- August Calendar (MODIFIED: Starts on Friday) -->
-                    <div x-show="currentMonth === 8" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-90" x-transition:enter-end="opacity-100 transform scale-100">
-                        <div class="text-center mb-4">
-                            <h4 class="text-lg font-semibold text-gray-700">2024年 8月</h4>
-                        </div>
-                        
-                        <div class="grid grid-cols-7 gap-1 text-center text-sm calendar-grid-container">
-                            <!-- Weekday Headers -->
-                            <div class="p-2 font-medium text-gray-600">日</div><div class="p-2 font-medium text-gray-600">一</div><div class="p-2 font-medium text-gray-600">二</div><div class="p-2 font-medium text-gray-600">三</div><div class="p-2 font-medium text-gray-600">四</div><div class="p-2 font-medium text-gray-600">五</div><div class="p-2 font-medium text-gray-600">六</div>
-                            
-                            <!-- Empty cells for padding -->
-                            <div class="calendar-day"></div><div class="calendar-day"></div><div class="calendar-day"></div><div class="calendar-day"></div><div class="calendar-day"></div>
-                            
-                            <!-- Dates -->
-                            <div class="calendar-day text-gray-700">1</div><div class="calendar-day text-gray-700">2</div>
-                            <div class="calendar-day text-gray-700">3</div><div class="calendar-day text-gray-700">4</div><div class="calendar-day text-gray-700">5</div><div class="calendar-day text-gray-700">6</div><div class="calendar-day text-gray-700">7</div><div class="calendar-day text-gray-700">8</div><div class="calendar-day text-gray-700">9</div>
-                            <div class="calendar-day text-gray-700">10</div><div class="calendar-day text-gray-700">11</div><div class="calendar-day text-gray-700">12</div><div class="calendar-day text-gray-700">13</div><div class="calendar-day text-gray-700">14</div><div class="calendar-day text-gray-700">15</div><div class="calendar-day text-gray-700">16</div>
-                            <div class="calendar-day text-gray-700">17</div>
-                            <div class="calendar-day text-gray-700">18
-                                <div class="event-bar event-bar-single bg-blue-500 event-bar-row-1"></div>
-                                <div class="event-bar event-bar-start bg-green-500 event-bar-row-2"></div>
-                                <div class="event-bar event-bar-start bg-red-500 event-bar-row-3"></div>
-                            </div>
-                            <div class="calendar-day text-gray-700">19
-                                <div class="event-bar event-bar-middle bg-green-500 event-bar-row-2"></div>
-                                <div class="event-bar event-bar-middle bg-red-500 event-bar-row-3"></div>
-                                <div class="event-bar event-bar-start bg-purple-500 event-bar-row-4"></div>
-                            </div>
-                            <div class="calendar-day text-gray-700">20
-                                <div class="event-bar event-bar-end bg-green-500 event-bar-row-2"></div>
-                                <div class="event-bar event-bar-middle bg-red-500 event-bar-row-3"></div>
-                                <div class="event-bar event-bar-end bg-purple-500 event-bar-row-4"></div>
-                            </div>
-                            <div class="calendar-day text-gray-700">21
-                                <div class="event-bar event-bar-end bg-red-500 event-bar-row-3"></div>
-                            </div>
-                            <div class="calendar-day text-gray-700">22
-                            
-                            </div>
-                            <div class="calendar-day text-gray-700">23
-                                
-                                <div class="event-bar event-bar-start bg-yellow-500 event-bar-row-3"></div>
-                            </div>
-                            <div class="calendar-day text-gray-700">24
-                                
-                                <div class="event-bar event-bar-end bg-yellow-500 event-bar-row-3"></div>
-                            </div>
-                            <div class="calendar-day text-gray-700">25
-                                <div class="event-bar event-bar-start bg-pink-500 event-bar-row-1"></div>
-                                
-                                
-                            </div>
-                            <div class="calendar-day text-gray-700">26
-                                <div class="event-bar event-bar-middle bg-pink-500 event-bar-row-1"></div>
-                                
-                                <div class="event-bar event-bar-start bg-orange-500 event-bar-row-2"></div>
-                                
-                            </div>
-                            <div class="calendar-day text-gray-700">27
-                                <div class="event-bar event-bar-end bg-pink-500 event-bar-row-1"></div>
-                                <div class="event-bar event-bar-middle bg-orange-500 event-bar-row-2"></div>
-                            </div>
-                            <div class="calendar-day text-gray-700">28
-                                <div class="event-bar event-bar-end bg-orange-500 event-bar-row-2"></div>
-                            </div>
-                            <div class="calendar-day text-gray-700">29
-                                <div class="event-bar event-bar-start bg-lime-500 event-bar-row-1"></div>
-                            </div>
-                            <div class="calendar-day text-gray-700">30
-                                <div class="event-bar event-bar-end bg-lime-500 event-bar-row-1"></div>
-                            </div>
-                            <div class="calendar-day text-gray-700">31</div>
-                        </div>
-
-                        <div class="mt-4 space-y-2 text-sm">
-                            <div class="flex items-center"><div class="w-4 h-4 bg-blue-500 rounded-full mr-2"></div><span>8/18 (一) - 線上新生茶會</span></div>
-                            <div class="flex items-center"><div class="w-4 h-4 bg-green-500 rounded-full mr-2"></div><span>8/18 (一) - 8/20 (三) - 宿舍申請</span></div>
-                            <div class="flex items-center"><div class="w-4 h-4 bg-red-500 rounded-full mr-2"></div><span>8/18 (一) - 8/21 (四) - 學士班新生申請學分抵免</span></div>
-                            <div class="flex items-center"><div class="w-4 h-4 bg-purple-500 rounded-full mr-2"></div><span>8/19 (二) - 8/20 (三) - 第一階段選課</span></div>
-                            <div class="flex items-center"><div class="w-4 h-4 bg-yellow-500 rounded-full mr-2"></div><span>8/23 (六) - 8/24 (日) - 搬遷宿舍</span></div>
-                            <div class="flex items-center"><div class="w-4 h-4 bg-pink-500 rounded-full mr-2"></div><span>8/25 (一) - 8/27 (三) - 第二階段選課</span></div>
-                            <div class="flex items-center"><div class="w-4 h-4 bg-orange-500 rounded-full mr-2"></div><span>8/26 (二) - 8/28 (四) - 新生定位營</span></div>
-                            <div class="flex items-center"><div class="w-4 h-4 bg-lime-500 rounded-full mr-2"></div><span>8/29 (五) - 8/30 (六) - 新生體檢</span></div>
-                        </div>
-                    </div>
-
-                    <!-- September Calendar (MODIFIED: Starts on Monday) -->
-                    <div x-show="currentMonth === 9" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-90" x-transition:enter-end="opacity-100 transform scale-100">
+                <div class="space-y-4">
+                    <div>
                         <div class="text-center mb-4">
                             <h4 class="text-lg font-semibold text-gray-700">2024年 9月</h4>
                         </div>
     
                         <div class="grid grid-cols-7 gap-1 text-center text-sm calendar-grid-container">
-                            <!-- Weekday Headers -->
                             <div class="p-2 font-medium text-gray-600">日</div><div class="p-2 font-medium text-gray-600">一</div><div class="p-2 font-medium text-gray-600">二</div><div class="p-2 font-medium text-gray-600">三</div><div class="p-2 font-medium text-gray-600">四</div><div class="p-2 font-medium text-gray-600">五</div><div class="p-2 font-medium text-gray-600">六</div>
                             
-                            <!-- Empty cells for padding -->
                             <div class="calendar-day"></div>
                             
-                            <!-- Dates -->
                             <div class="calendar-day text-gray-700">1
                                 <div class="event-bar event-bar-single bg-teal-500 event-bar-row-1"></div>
                                 <div class="event-bar event-bar-start bg-slate-500 event-bar-row-2"></div>
@@ -481,21 +440,6 @@
                         class="w-full h-auto object-cover"
                     >
                 </div>
-                <p class="mt-4 text-sm text-gray-600 text-left leading-relaxed">
-                    <strong>新生定位營：</strong><br>
-                    <strong>8月26日(二)：</strong><br>
-                    地點:商學院207<br>
-                    1、上午至下午15時20分為院系時間，15時40分後至指定場地(官網公布)進行「團體動力」。<br>
-                    <strong>8月27日(三)：</strong><br>
-                    1、上午「政式啟航」會有各行政單位進行說明<br>
-                    2、中午午休時間供各系彈性運用。<br>
-                    3、下午兩點至四點「社團文化祭」。<br>
-                    4、下午四點到五點進行「大學Step One」。<br><br>
-                    <strong>8月28日(四)：</strong><br>
-                    1、上午「特別活動」預計由X學院及新生書院共同規劃特別活動。<br>
-                    2、中午午餐由新生視選擇課程自行安排。<br>
-                    3、下午「焦點工作坊」提供新生自由選擇有興趣的工作坊報名參加。
-                </p>
             </div>
         </div>
     </main>
@@ -504,5 +448,42 @@
         <div class="max-w-6xl mx-auto px-4 text-center">
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('countdown', (deadline) => ({
+                deadline: new Date(deadline).getTime(),
+                days: '00',
+                hours: '00',
+                minutes: '00',
+                seconds: '00',
+                isExpired: false,
+                init() {
+                    this.updateTimer();
+                    const timer = setInterval(() => {
+                        this.updateTimer();
+                        if (this.isExpired) {
+                            clearInterval(timer);
+                        }
+                    }, 1000);
+                },
+                updateTimer() {
+                    const now = new Date().getTime();
+                    const diff = this.deadline - now;
+
+                    if (diff <= 0) {
+                        this.isExpired = true;
+                        this.days = this.hours = this.minutes = this.seconds = '00';
+                        return;
+                    }
+
+                    this.days = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+                    this.hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+                    this.minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                    this.seconds = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+                }
+            }));
+        });
+    </script>
 </body>
 </html>
