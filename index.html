@@ -205,77 +205,64 @@
 
     <main class="max-w-6xl mx-auto px-4 py-12">
         
-        <div class="bg-white rounded-2xl p-8 shadow-lg mb-12">
+    <div class="bg-white rounded-2xl p-8 shadow-lg mb-12">
             <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-800 p-6 rounded-lg mb-8" 
-     x-data="countdown('2025-10-12T23:59:59')">
-    <h3 class="text-2xl font-bold mb-4 flex items-center">
-        👕 系服資訊
-    </h3>
+                x-data="countdown('2025-10-28T23:59:59')">
+                <h3 class="text-2xl font-bold mb-4 flex items-center">
+                    🔥 114 資管制服系烤趴踢報名表單 😋
+                </h3>
 
-    <div class="mb-6 text-gray-700">
-        <p>🔎 <strong>預購時間：</strong>10/6（一）～10/12（日）23:59</p>
-        <p>🔎 <strong>價格說明：</strong></p>
-        <ul class="list-disc ml-6 mt-2 space-y-1">
-            <li>有繳系費者：250元 / 件</li>
-            <li>未繳系費者：350元 / 件</li>
-            <li>⚠️ 尺寸 2XL (含) 以上，每件需額外加收20元</li>
-        </ul>
+                <div class="mb-6 text-gray-700 space-y-3">
+                    <p>📅 <strong>時間：</strong>11/20（四）18:30～22:30</p>
+                    <p>📍 <strong>地點：</strong>恆光橋下</p>
 
-        <p class="mt-4">🔎 <strong>樣衣試穿資訊：</strong></p>
-        <ul class="list-disc ml-6 mt-2 space-y-1">
-            <li>時間：10/7（二）～10/9（四）18:00前</li>
-            <li>地點：商院九樓系辦外座位區</li>
-        </ul>
+                    <p>💰 <strong>費用：</strong></p>
+                    <ul class="list-disc ml-6 space-y-1">
+                        <li><strong>個人報名：</strong>無繳交系費者 300 元／人、有繳交系費者 200 元／人</li>
+                        <li><strong>三人團報：</strong>無繳交系費者 250 元／人、有繳交系費者 200 元／人</li>
+                        <li><strong>組隊報名（8–9人）：</strong>整組收費 2000 元（繳交系費者一人折 50 元，一組最多折 400 元）</li>
+                        <li><strong>烤肉用具組：</strong>300 元（無系費優惠）</li>
+                    </ul>
 
-        <p class="mt-4">🔎 <strong>繳費方式：</strong>匯款 / 現金（內有詳細資訊！）</p>
+                    <p>🎽 <strong>Dress code：</strong>高中制服</p>
 
-        <p class="mt-4">🔎 <strong>預購表單連結：</strong><br>
-            <a href="https://forms.gle/UHu3mWEuALA6Mt5j8" 
-            target="_blank" 
-            class="text-blue-600 underline hover:text-blue-800 break-words break-all whitespace-normal">
-                https://forms.gle/UHu3mWEuALA6Mt5j8
-            </a>
-        </p>
-    </div>
+                    <p>📝 <strong>報名表單：</strong><br>
+                        <a href="https://forms.gle/juJM2T9x5ehNLXY67" 
+                        target="_blank"
+                        class="text-blue-600 underline hover:text-blue-800 break-words">
+                        https://forms.gle/juJM2T9x5ehNLXY67</a>
+                    </p>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        <div class="flex flex-col items-center">
-            <img src="misc2.jpg" alt="MIS 系服正面" class="rounded-lg shadow-md w-72 mb-2">
-            <p class="text-sm text-gray-600">正面設計</p>
-        </div>
-        <div class="flex flex-col items-center">
-            <img src="misc1.jpg" alt="MIS 系服背面" class="rounded-lg shadow-md w-72 mb-2">
-            <p class="text-sm text-gray-600">背面設計</p>
-        </div>
-    </div>
-
-    <div class="mt-8 text-center">
-        <h4 class="text-xl font-semibold mb-2">⏰ 預購倒數</h4>
-        <template x-if="!isExpired">
-            <div class="flex justify-center gap-4 text-center text-lg font-mono">
-                <div>
-                    <div class="text-3xl font-bold text-blue-600" x-text="days"></div>
-                    <div class="text-xs text-gray-600">天</div>
+                    <p>⏰ <strong>表單截止時間：</strong>10/28 23:59</p>
                 </div>
-                <div>
-                    <div class="text-3xl font-bold text-blue-600" x-text="hours"></div>
-                    <div class="text-xs text-gray-600">時</div>
-                </div>
-                <div>
-                    <div class="text-3xl font-bold text-blue-600" x-text="minutes"></div>
-                    <div class="text-xs text-gray-600">分</div>
-                </div>
-                <div>
-                    <div class="text-3xl font-bold text-blue-600" x-text="seconds"></div>
-                    <div class="text-xs text-gray-600">秒</div>
+
+                <div class="mt-8 text-center">
+                    <h4 class="text-xl font-semibold mb-2">⏰ 報名倒數</h4>
+                    <template x-if="!isExpired">
+                        <div class="flex justify-center gap-4 text-center text-lg font-mono">
+                            <div>
+                                <div class="text-3xl font-bold text-blue-600" x-text="days"></div>
+                                <div class="text-xs text-gray-600">天</div>
+                            </div>
+                            <div>
+                                <div class="text-3xl font-bold text-blue-600" x-text="hours"></div>
+                                <div class="text-xs text-gray-600">時</div>
+                            </div>
+                            <div>
+                                <div class="text-3xl font-bold text-blue-600" x-text="minutes"></div>
+                                <div class="text-xs text-gray-600">分</div>
+                            </div>
+                            <div>
+                                <div class="text-3xl font-bold text-blue-600" x-text="seconds"></div>
+                                <div class="text-xs text-gray-600">秒</div>
+                            </div>
+                        </div>
+                    </template>
+                    <template x-if="isExpired">
+                        <p class="text-red-600 font-bold text-lg mt-4">報名已截止！</p>
+                    </template>
                 </div>
             </div>
-        </template>
-        <template x-if="isExpired">
-            <p class="text-red-600 font-bold text-lg mt-4">預購已截止！</p>
-        </template>
-    </div>
-</div>
         </div>
         <div class="bg-white rounded-2xl p-8 shadow-lg mb-12">
             <h3 class="text-2xl font-bold text-gray-800 mb-2 flex items-center">
