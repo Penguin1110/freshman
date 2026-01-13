@@ -49,9 +49,21 @@
              x-show="currentEvent"
              x-cloak>
             
+            <div class="flex flex-wrap gap-2 mb-6 border-b border-gray-100 pb-4">
+                <template x-for="event in events" :key="event.id">
+                    <button 
+                        @click="selectEvent(event.id)"
+                        class="px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200"
+                        :class="currentEvent.id === event.id ? 'bg-purple-600 text-white shadow-md' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
+                    >
+                        <span x-text="event.shortTitle || event.title"></span>
+                    </button>
+                </template>
+            </div>
+
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
                 <div class="flex-1">
-                    <span class="bg-purple-100 text-purple-800 text-sm font-semibold px-3 py-1 rounded-full mb-2 inline-block">Coming Next</span>
+                    <span class="bg-purple-100 text-purple-800 text-sm font-semibold px-3 py-1 rounded-full mb-2 inline-block" x-text="isNearest ? 'Coming Next' : 'Upcoming Event'"></span>
                     <h3 class="text-3xl font-bold text-gray-800" x-text="currentEvent.title"></h3>
                     <p class="text-gray-600 mt-2" x-text="currentEvent.desc"></p>
                 </div>
@@ -123,7 +135,7 @@
                     
                     <div class="mb-6 group">
                         <h4 class="text-lg font-bold text-gray-800 group-hover:text-orange-600 transition">🀄 麻將大賽</h4>
-                        <p class="text-sm text-gray-600">4/18-19 或 4/25-26 (暫定)(未確定是否舉辦)</p>
+                        <p class="text-sm text-gray-600">4/18-19 或 4/25-26 (暫定)</p>
                         <p class="text-xs text-gray-500 mt-1">總召：何凱瑜</p>
                     </div>
 
@@ -140,8 +152,8 @@
                     <div class="mb-6 group">
                         <h4 class="text-lg font-bold text-gray-800 group-hover:text-indigo-600 transition">💃 五系聯合之夜</h4>
                         <p class="text-sm text-gray-600">5月 (日期未定) @ 四維堂</p>
-                        <p class="text-xs text-gray-500 mt-1">總召：梁捷茵 / 副召：毛蔡瀚勍 [cite: 59]</p>
-                        <p class="text-xs text-gray-500">經濟/財政/金融/資管/公行 聯合舉辦 [cite: 61]</p>
+                        <p class="text-xs text-gray-500 mt-1">總召：梁捷茵 / 副召：毛蔡瀚勍</p>
+                        <p class="text-xs text-gray-500">經濟/財政/金融/資管/公行 聯合舉辦</p>
                     </div>
                 </div>
             </div>
@@ -250,7 +262,8 @@
                     { 
                         id: 'karaoke', 
                         date: '2026-03-05T18:00:00', 
-                        title: '🎤 資管系卡', 
+                        title: '🎤 資管系卡',
+                        shortTitle: '🎤 系卡',
                         desc: '人氣獎 獎金 個人$500 / 雙人$800', 
                         location: '雲岫廳',
                         displayDate: '3/5 (四) 晚上',
@@ -260,6 +273,7 @@
                         id: 'picnic', 
                         date: '2026-03-28T14:00:00', 
                         title: '🧺 資管 x 資科 聯合野餐', 
+                        shortTitle: '🧺 野餐',
                         desc: '陽光、草地、好心情', 
                         location: '達賢戶外大草坪',
                         displayDate: '3/28 (六) 下午',
@@ -269,6 +283,7 @@
                         id: 'mahjong', 
                         date: '2026-04-18T10:00:00', 
                         title: '🀄 資管麻將大賽', 
+                        shortTitle: '🀄 麻將',
                         desc: '摸一圈嗎？', 
                         location: '地點協調中',
                         displayDate: '4/18-19 或 4/25-26 (暫定)',
@@ -278,6 +293,7 @@
                         id: 'night', 
                         date: '2026-05-20T18:00:00', 
                         title: '💃 五系聯合之夜', 
+                        shortTitle: '💃 之夜',
                         desc: '五系盛大聯合晚會', 
                         location: '四維堂',
                         displayDate: '5月 (日期未定)',
@@ -285,6 +301,7 @@
                     }
                 ],
                 currentEvent: null,
+                isNearest: true, // 追蹤是否為自動選擇的最近活動
                 timer: { days: '00', hours: '00', minutes: '00' },
                 interval: null,
 
@@ -297,6 +314,14 @@
                     const now = new Date().getTime();
                     // 找到第一個「日期 > 現在」的活動
                     this.currentEvent = this.events.find(e => new Date(e.date).getTime() > now);
+                    this.isNearest = true;
+                },
+
+                // 新增：手動選擇活動
+                selectEvent(id) {
+                    this.currentEvent = this.events.find(e => e.id === id);
+                    this.isNearest = false; // 手動選擇後，標籤改為 Upcoming Event
+                    this.updateTimer(); // 立即更新倒數
                 },
 
                 startTimer() {
@@ -313,7 +338,14 @@
                     const deadline = new Date(this.currentEvent.date).getTime();
                     const diff = deadline - now;
 
+                    // 如果現在選的活動過期了
                     if (diff <= 0) {
+                        // 如果是手動選擇的，就顯示 00
+                        if (!this.isNearest) {
+                            this.timer.days = this.timer.hours = this.timer.minutes = '00';
+                            return;
+                        }
+                        // 如果是自動模式，就跳下一個
                         this.findNextEvent();
                         return;
                     }
