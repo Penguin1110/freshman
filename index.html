@@ -71,9 +71,16 @@
                 <div class="mt-6 md:mt-0 bg-gray-100 p-4 rounded-xl text-center min-w-[220px] shadow-inner">
                     <p class="text-gray-500 text-xs mb-1">距離活動開始還有</p>
                     <div class="flex justify-center gap-2 text-2xl font-bold text-purple-600 font-mono">
-                        <div><span x-text="timer.days"></span><span class="text-xs text-gray-400 ml-1">天</span></div>
-                        <div><span x-text="timer.hours"></span><span class="text-xs text-gray-400 ml-1">時</span></div>
-                        <div><span x-text="timer.minutes"></span><span class="text-xs text-gray-400 ml-1">分</span></div>
+                        <template x-if="currentEvent.isUndetermined">
+                            <span class="text-4xl">??</span>
+                        </template>
+                        <template x-if="!currentEvent.isUndetermined">
+                            <div class="flex gap-2">
+                                <div><span x-text="timer.days"></span><span class="text-xs text-gray-400 ml-1">天</span></div>
+                                <div><span x-text="timer.hours"></span><span class="text-xs text-gray-400 ml-1">時</span></div>
+                                <div><span x-text="timer.minutes"></span><span class="text-xs text-gray-400 ml-1">分</span></div>
+                            </div>
+                        </template>
                     </div>
                 </div>
             </div>
@@ -114,13 +121,11 @@
                     <div class="mb-6 group">
                         <h4 class="text-lg font-bold text-gray-800 group-hover:text-blue-600 transition">🎤 系卡大賽</h4>
                         <p class="text-sm text-gray-600">3/5 (四) @ 雲岫廳</p>
-                        <p class="text-xs text-gray-500 mt-1">總召：楊竣宇 / 副召：陳靖宇</p>
                     </div>
 
                     <div class="mb-6 group">
                         <h4 class="text-lg font-bold text-gray-800 group-hover:text-green-600 transition">🧺 資管 x 資科 聯合野餐</h4>
                         <p class="text-sm text-gray-600">3/28 (六) 下午 @ 達賢戶外大草坪</p>
-                        <p class="text-xs text-gray-500 mt-1">總召：張綺均 / 副召：鄧均婕</p>
                     </div>
 
                     <div class="mb-6 group">
@@ -135,14 +140,12 @@
                     
                     <div class="mb-6 group">
                         <h4 class="text-lg font-bold text-gray-800 group-hover:text-orange-600 transition">🀄 麻將大賽</h4>
-                        <p class="text-sm text-gray-600">4/18-19 或 4/25-26 (暫定)</p>
-                        <p class="text-xs text-gray-500 mt-1">總召：何凱瑜</p>
+                        <p class="text-sm text-gray-600">4/18-19 或 4/25-26 (暫定) 不一定會辦 不一定會辦 不一定會辦</p>
                     </div>
 
                     <div class="mb-6 group">
                         <h4 class="text-lg font-bold text-gray-800 group-hover:text-yellow-600 transition">🎪 資管週</h4>
                         <p class="text-sm text-gray-600">4月 ~ 5月 @ 麥側攤位</p>
-                        <p class="text-xs text-gray-500 mt-1">總召：許祐寧</p>
                     </div>
                 </div>
 
@@ -152,8 +155,12 @@
                     <div class="mb-6 group">
                         <h4 class="text-lg font-bold text-gray-800 group-hover:text-indigo-600 transition">💃 五系聯合之夜</h4>
                         <p class="text-sm text-gray-600">5月 (日期未定) @ 四維堂</p>
-                        <p class="text-xs text-gray-500 mt-1">總召：梁捷茵 / 副召：毛蔡瀚勍</p>
-                        <p class="text-xs text-gray-500">經濟/財政/金融/資管/公行 聯合舉辦</p>
+                    </div>
+                    
+                    <div class="mb-6 group">
+                        <h4 class="text-lg font-bold text-gray-800">💼 職涯/升學講座</h4>
+                        <p class="text-sm text-gray-600">時間未定 (3-5月間)</p>
+                        <p class="text-xs text-gray-500 mt-1">學術部主辦</p>
                     </div>
                 </div>
             </div>
@@ -264,7 +271,7 @@
                         date: '2026-03-05T18:00:00', 
                         title: '🎤 資管系卡',
                         shortTitle: '🎤 系卡',
-                        desc: '人氣獎 獎金 個人$500 / 雙人$800', 
+                        desc: '人氣獎 獎金 個人$500 / 雙人$800 ', 
                         location: '雲岫廳',
                         displayDate: '3/5 (四) 晚上',
                         note: '報名: 2/16 - 2/27' 
@@ -274,34 +281,45 @@
                         date: '2026-03-28T14:00:00', 
                         title: '🧺 資管 x 資科 聯合野餐', 
                         shortTitle: '🧺 野餐',
-                        desc: '陽光、草地、好心情', 
+                        desc: '陽光、草地、好心情 ', 
                         location: '達賢戶外大草坪',
                         displayDate: '3/28 (六) 下午',
                         note: '與資科系合辦' 
                     },
                     { 
-                        id: 'mahjong', 
-                        date: '2026-04-18T10:00:00', 
-                        title: '🀄 資管麻將大賽', 
-                        shortTitle: '🀄 麻將',
-                        desc: '摸一圈嗎？', 
+                        id: 'allpass', 
+                        date: '2026-03-30T12:00:00', 
+                        title: '🍬 歐趴糖發放',
+                        shortTitle: '🍬 歐趴糖',
+                        desc: '祝大家期中考順利 All Pass！', 
+                        location: '系辦或系櫃 (暫定)',
+                        displayDate: '3/30 ~ 4/1 (預計)',
+                        note: '秘書部主辦' 
+                    },
+                    { 
+                        id: 'lecture', 
+                        date: '2026-06-30T00:00:00', // 設一個未來時間以確保不會過期
+                        title: '💼 資管系講座', 
+                        shortTitle: '💼 講座',
+                        desc: '職涯/升學/補習班講座 ', 
                         location: '地點協調中',
-                        displayDate: '4/18-19 或 4/25-26 (暫定)',
-                        note: '沒有桌子可能辦不成 :(' 
+                        displayDate: '?',
+                        note: '時間未定 (3-5月間)',
+                        isUndetermined: true
                     },
                     { 
                         id: 'night', 
                         date: '2026-05-20T18:00:00', 
                         title: '💃 五系聯合之夜', 
                         shortTitle: '💃 之夜',
-                        desc: '五系聯合晚會', 
+                        desc: '五系盛大聯合晚會 ', 
                         location: '四維堂',
                         displayDate: '5月 (日期未定)',
-                        note: '大啊來報名啦' 
+                        note: '總召: 梁捷茵 / 副召: 毛蔡瀚勍' 
                     }
                 ],
                 currentEvent: null,
-                isNearest: true, // 追蹤是否為自動選擇的最近活動
+                isNearest: true, 
                 timer: { days: '00', hours: '00', minutes: '00' },
                 interval: null,
 
@@ -317,11 +335,10 @@
                     this.isNearest = true;
                 },
 
-                // 新增：手動選擇活動
                 selectEvent(id) {
                     this.currentEvent = this.events.find(e => e.id === id);
-                    this.isNearest = false; // 手動選擇後，標籤改為 Upcoming Event
-                    this.updateTimer(); // 立即更新倒數
+                    this.isNearest = false; 
+                    this.updateTimer(); 
                 },
 
                 startTimer() {
@@ -334,18 +351,20 @@
                 updateTimer() {
                     if (!this.currentEvent) return;
 
+                    // 特殊處理：若活動時間未定
+                    if (this.currentEvent.isUndetermined) {
+                        return; // 讓 HTML template 處理顯示 ??
+                    }
+
                     const now = new Date().getTime();
                     const deadline = new Date(this.currentEvent.date).getTime();
                     const diff = deadline - now;
 
-                    // 如果現在選的活動過期了
                     if (diff <= 0) {
-                        // 如果是手動選擇的，就顯示 00
                         if (!this.isNearest) {
                             this.timer.days = this.timer.hours = this.timer.minutes = '00';
                             return;
                         }
-                        // 如果是自動模式，就跳下一個
                         this.findNextEvent();
                         return;
                     }
