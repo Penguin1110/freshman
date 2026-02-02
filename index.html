@@ -20,6 +20,13 @@
         /* --- 基礎樣式 --- */
         .bg-gray-50 { background-color: #f9fafb; }
         .bg-white { background-color: #ffffff; }
+
+        /* 月曆自定義樣式 */
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); border: 1px solid #e5e7eb; }
+        .calendar-day { min-height: 50px; border: 0.5px solid #f3f4f6; padding: 2px; position: relative; font-size: 0.7rem; background: white; }
+        .event-bar { height: 4px; border-radius: 2px; margin-top: 1px; width: 100%; }
+        .bg-bar-purple { background-color: #9333ea; } /* 配合系卡色系 */
+        .bg-bar-pink { background-color: #ec4899; }   /* 配合之夜色系 */
         
         /* 響應式網格 */
         @media (max-width: 639px) { .mobile-single-col { grid-template-columns: 1fr !important; } }
@@ -30,7 +37,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen bg-gray-50 font-sans">
+<body class="min-h-screen bg-gray-50 font-sans" x-data="eventManager">
     <header class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-4 text-center">
             <div class="flex justify-center items-center gap-4">
@@ -45,7 +52,6 @@
     <main class="max-w-6xl mx-auto px-4 py-8">
         
         <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg mb-12 border-t-8 border-purple-500 transition-all duration-500"
-             x-data="eventManager"
              x-show="currentEvent"
              x-cloak>
             
@@ -65,23 +71,37 @@
                 <div class="flex-1">
                     <span class="bg-purple-100 text-purple-800 text-sm font-semibold px-3 py-1 rounded-full mb-2 inline-block" x-text="isNearest ? 'Coming Next' : 'Upcoming Event'"></span>
                     <h3 class="text-3xl font-bold text-gray-800" x-text="currentEvent.title"></h3>
-                    <p class="text-gray-600 mt-2" x-text="currentEvent.desc"></p>
+                    <div class="text-gray-600 mt-2 whitespace-pre-line" x-html="currentEvent.desc"></div>
+                    
+                    <template x-if="currentEvent.recruitLink && !isRecruitOver(currentEvent)">
+                        <div class="mt-4">
+                            <a :href="currentEvent.recruitLink" target="_blank" class="inline-block px-6 py-2 bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-700 transition shadow-md">
+                                📝 填寫招工表單
+                            </a>
+                        </div>
+                    </template>
                 </div>
 
-                <div class="mt-6 md:mt-0 bg-gray-100 p-4 rounded-xl text-center min-w-[220px] shadow-inner">
-                    <p class="text-gray-500 text-xs mb-1">距離活動開始還有</p>
-                    <div class="flex justify-center gap-2 text-2xl font-bold text-purple-600 font-mono">
-                        <template x-if="currentEvent.isUndetermined">
-                            <span class="text-4xl">??</span>
-                        </template>
-                        <template x-if="!currentEvent.isUndetermined">
-                            <div class="flex gap-2">
-                                <div><span x-text="timer.days"></span><span class="text-xs text-gray-400 ml-1">天</span></div>
-                                <div><span x-text="timer.hours"></span><span class="text-xs text-gray-400 ml-1">時</span></div>
-                                <div><span x-text="timer.minutes"></span><span class="text-xs text-gray-400 ml-1">分</span></div>
-                            </div>
-                        </template>
+                <div class="mt-6 md:mt-0 flex flex-col gap-4 min-w-[220px]">
+                    <div class="bg-gray-100 p-4 rounded-xl text-center shadow-inner">
+                        <p class="text-gray-500 text-xs mb-1">距離活動開始還有</p>
+                        <div class="flex justify-center gap-2 text-2xl font-bold text-purple-600 font-mono">
+                            <div><span x-text="timer.days"></span><span class="text-xs text-gray-400 ml-1">天</span></div>
+                            <div><span x-text="timer.hours"></span><span class="text-xs text-gray-400 ml-1">時</span></div>
+                            <div><span x-text="timer.minutes"></span><span class="text-xs text-gray-400 ml-1">分</span></div>
+                        </div>
                     </div>
+                    
+                    <template x-if="currentEvent.recruitLink && !isRecruitOver(currentEvent)">
+                        <div class="bg-purple-50 p-4 rounded-xl text-center shadow-inner border border-purple-100">
+                            <p class="text-purple-600 text-xs mb-1 font-bold">🔥 招工截止倒數</p>
+                            <div class="flex justify-center gap-2 text-2xl font-bold text-purple-700 font-mono">
+                                <div><span x-text="recruitTimer.days"></span><span class="text-xs text-purple-400 ml-1">天</span></div>
+                                <div><span x-text="recruitTimer.hours"></span><span class="text-xs text-purple-400 ml-1">時</span></div>
+                                <div><span x-text="recruitTimer.minutes"></span><span class="text-xs text-purple-400 ml-1">分</span></div>
+                            </div>
+                        </div>
+                    </template>
                 </div>
             </div>
 
@@ -95,13 +115,53 @@
                     <p class="font-bold text-lg text-gray-800" x-text="currentEvent.location"></p>
                 </div>
                 <div>
-                    <p class="text-gray-500 text-sm flex items-center">📝 備註</p>
-                    <p class="font-bold text-lg text-gray-800" x-text="currentEvent.note"></p>
+                    <p class="text-gray-500 text-sm flex items-center">📝 備註 / 截止日期</p>
+                    <p class="font-bold text-lg text-gray-800" x-text="isRecruitOver(currentEvent) ? '招工已結束' : currentEvent.note"></p>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-2xl p-8 shadow-lg mb-12 text-center" x-data="eventManager" x-show="!currentEvent" x-cloak>
+        <div class="bg-white rounded-2xl p-8 shadow-lg mb-12 border-t-4 border-indigo-400">
+            <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center">🗓️ 2026 招工與活動月曆</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <p class="text-center font-bold mb-2 text-gray-600">February</p>
+                    <div class="calendar-grid rounded-lg overflow-hidden">
+                        <template x-for="d in ['日','一','二','三','四','五','六']">
+                            <div class="text-center bg-gray-50 py-1 text-[10px] font-bold text-gray-400" x-text="d"></div>
+                        </template>
+                        <template x-for="i in 28">
+                            <div class="calendar-day">
+                                <span x-text="i" :class="i===1?'text-red-500':''"></span>
+                                <template x-if="i <= 7"><div class="event-bar bg-bar-purple" title="系卡招工"></div></template>
+                                <template x-if="i <= 14"><div class="event-bar bg-bar-pink" title="之夜招工"></div></template>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-center font-bold mb-2 text-gray-600">March</p>
+                    <div class="calendar-grid rounded-lg overflow-hidden">
+                        <template x-for="d in ['日','一','二','三','四','五','六']">
+                            <div class="text-center bg-gray-50 py-1 text-[10px] font-bold text-gray-400" x-text="d"></div>
+                        </template>
+                        <template x-for="i in 31">
+                            <div class="calendar-day">
+                                <span x-text="i" :class="[1,8,15,22,29].includes(i)?'text-red-500':''"></span>
+                                <template x-if="i === 5"><div class="mt-1 text-[10px] text-purple-600 font-bold">系卡</div></template>
+                                <template x-if="i === 28"><div class="mt-1 text-[10px] text-green-600 font-bold">野餐</div></template>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-4 mt-4 justify-center text-xs text-gray-500">
+                <div class="flex items-center"><span class="w-3 h-3 bg-bar-purple mr-1 rounded-sm"></span> 系卡招工中 (至2/7)</div>
+                <div class="flex items-center"><span class="w-3 h-3 bg-bar-pink mr-1 rounded-sm"></span> 之夜招工中 (至2/14)</div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-8 shadow-lg mb-12 text-center" x-show="!currentEvent" x-cloak>
             <h3 class="text-2xl font-bold text-gray-400">本學期活動皆已圓滿結束 🎉</h3>
             <p class="text-gray-500 mt-2">感謝大家的參與，我們下學期見！</p>
         </div>
@@ -117,17 +177,14 @@
             <div class="space-y-6 relative border-l-4 border-blue-100 ml-3 pl-8">
                 <div class="relative">
                     <span class="absolute -left-12 top-1 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm">3月</span>
-                    
                     <div class="mb-6 group">
                         <h4 class="text-lg font-bold text-gray-800 group-hover:text-blue-600 transition">🎤 系卡大賽</h4>
                         <p class="text-sm text-gray-600">3/5 (四) @ 雲岫廳</p>
                     </div>
-
                     <div class="mb-6 group">
                         <h4 class="text-lg font-bold text-gray-800 group-hover:text-green-600 transition">🧺 資管系野餐</h4>
                         <p class="text-sm text-gray-600">3/28 (六) 下午 @ 達賢戶外大草坪</p>
                     </div>
-
                     <div class="mb-6 group">
                         <h4 class="text-lg font-bold text-gray-800 group-hover:text-pink-600 transition">🍬 歐趴糖發放</h4>
                         <p class="text-sm text-gray-600">3/30 ~ 4/1 (預計)</p>
@@ -137,12 +194,10 @@
 
                 <div class="relative pt-4">
                     <span class="absolute -left-12 top-5 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-sm">4月</span>
-                    
                     <div class="mb-6 group">
                         <h4 class="text-lg font-bold text-gray-800 group-hover:text-orange-600 transition">🀄 麻將大賽</h4>
                         <p class="text-sm text-gray-600">4/18-19 或 4/25-26 (暫定) 不一定會辦 不一定會辦 不一定會辦</p>
                     </div>
-
                     <div class="mb-6 group">
                         <h4 class="text-lg font-bold text-gray-800 group-hover:text-yellow-600 transition">🎪 資管週</h4>
                         <p class="text-sm text-gray-600">4月 ~ 5月 @ 麥側攤位</p>
@@ -151,12 +206,10 @@
 
                 <div class="relative pt-4">
                     <span class="absolute -left-12 top-5 w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-sm">5月</span>
-                    
                     <div class="mb-6 group">
                         <h4 class="text-lg font-bold text-gray-800 group-hover:text-indigo-600 transition">💃 五系聯合之夜</h4>
-                        <p class="text-sm text-gray-600">5月 (日期未定) @ 四維堂</p>
+                        <p class="text-sm text-gray-600">5/15 (五) @ 四維堂</p>
                     </div>
-                    
                     <div class="mb-6 group">
                         <h4 class="text-lg font-bold text-gray-800">💼 職涯/升學講座</h4>
                         <p class="text-sm text-gray-600">時間未定 (3-5月間)</p>
@@ -257,7 +310,7 @@
     </main>
 
     <footer class="bg-white border-t mt-16 py-8">
-        <div class="max-w-6xl mx-auto px-4 text-center">
+        <div class="max-w-7xl mx-auto px-4 text-center">
             <p class="text-gray-500 text-sm">© 2026 資管系學會</p>
         </div>
     </footer>
@@ -268,26 +321,42 @@
                 events: [
                     { 
                         id: 'karaoke', 
-                        date: '2026-03-05T18:00:00', 
-                        title: '🎤 資管系卡',
+                        recruitDeadline: '2026-02-07T23:59:59', // 招工截止日期
+                        date: '2026-03-05T19:00:00', // 活動開始日期
+                        title: '🎤 資管系卡 - 招工中',
                         shortTitle: '🎤 系卡',
-                        desc: '人氣獎 獎金 個人$500 / 雙人$800 ', 
+                        desc: '時間：3/5（四）19:00-21:30\n地點：雲岫廳\n\n預計招工人數與部門如下：\n-活動組12人：流程設計、主持串場\n-場務組4人：音控攝影、現場支援（如有相機請備註）\n-美宣組3人：道具製作、場地佈置\n招工表單僅開放至2/7，請踴躍報名！', 
                         location: '雲岫廳',
-                        displayDate: '3/5 (四) 晚上',
-                        note: '報名: 2/16 - 2/27' 
+                        displayDate: '3/5 (四) 19:00-21:30',
+                        note: '2/7 招工截止',
+                        recruitLink: 'https://forms.gle/DvuopwHrhjVrqWCi6'
+                    },
+                    { 
+                        id: 'night', 
+                        recruitDeadline: '2026-02-14T23:59:59', // 招工截止日期
+                        date: '2026-05-15T18:00:00', // 活動開始日期
+                        title: '💃 五系聯合之夜 - 招工中', 
+                        shortTitle: '💃 之夜',
+                        desc: '嗨大家 我是總召梁捷茵（副召毛蔡瀚勍）🤓\n時間地點：5/15（五）在四維堂\n共有行銷、活動、公關、美宣四組，歡迎報名！\n截止時間：2/14 23:59', 
+                        location: '四維堂',
+                        displayDate: '5/15 (五) 晚上',
+                        note: '2/14 招工截止',
+                        recruitLink: 'https://forms.gle/TkdA5HLgj9iKALcF8'
                     },
                     { 
                         id: 'picnic', 
+                        recruitDeadline: null,
                         date: '2026-03-28T14:00:00', 
                         title: '🧺 資管系野餐', 
                         shortTitle: '🧺 野餐',
                         desc: '陽光、草地、好心情 ', 
                         location: '達賢戶外大草坪',
                         displayDate: '3/28 (六) 下午',
-                        note: '' 
+                        note: '自由參加' 
                     },
                     { 
                         id: 'allpass', 
+                        recruitDeadline: null,
                         date: '2026-03-30T12:00:00', 
                         title: '🍬 歐趴糖發放',
                         shortTitle: '🍬 歐趴糖',
@@ -295,32 +364,12 @@
                         location: '系辦或系櫃 (暫定)',
                         displayDate: '3/30 ~ 4/1 (預計)',
                         note: '秘書部主辦' 
-                    },
-                    { 
-                        id: 'lecture', 
-                        date: '2026-06-30T00:00:00', // 設一個未來時間以確保不會過期
-                        title: '💼 資管系講座', 
-                        shortTitle: '💼 講座',
-                        desc: '職涯/升學/補習班講座 ', 
-                        location: '地點協調中',
-                        displayDate: '?',
-                        note: '時間未定 (3-5月間)',
-                        isUndetermined: true
-                    },
-                    { 
-                        id: 'night', 
-                        date: '2026-05-20T18:00:00', 
-                        title: '💃 五系聯合之夜', 
-                        shortTitle: '💃 之夜',
-                        desc: '五系盛大聯合晚會 ', 
-                        location: '四維堂',
-                        displayDate: '5月 (日期未定)',
-                        note: '總召: 梁捷茵 / 副召: 毛蔡瀚勍' 
                     }
                 ],
                 currentEvent: null,
                 isNearest: true, 
                 timer: { days: '00', hours: '00', minutes: '00' },
+                recruitTimer: { days: '00', hours: '00', minutes: '00' },
                 interval: null,
 
                 init() {
@@ -330,8 +379,7 @@
 
                 findNextEvent() {
                     const now = new Date().getTime();
-                    // 找到第一個「日期 > 現在」的活動
-                    this.currentEvent = this.events.find(e => new Date(e.date).getTime() > now);
+                    this.currentEvent = this.events.find(e => new Date(e.date).getTime() > now) || this.events[0];
                     this.isNearest = true;
                 },
 
@@ -339,6 +387,11 @@
                     this.currentEvent = this.events.find(e => e.id === id);
                     this.isNearest = false; 
                     this.updateTimer(); 
+                },
+
+                isRecruitOver(event) {
+                    if (!event.recruitDeadline) return true;
+                    return new Date().getTime() > new Date(event.recruitDeadline).getTime();
                 },
 
                 startTimer() {
@@ -350,28 +403,28 @@
 
                 updateTimer() {
                     if (!this.currentEvent) return;
-
-                    // 特殊處理：若活動時間未定
-                    if (this.currentEvent.isUndetermined) {
-                        return; // 讓 HTML template 處理顯示 ??
-                    }
-
                     const now = new Date().getTime();
-                    const deadline = new Date(this.currentEvent.date).getTime();
-                    const diff = deadline - now;
 
-                    if (diff <= 0) {
-                        if (!this.isNearest) {
-                            this.timer.days = this.timer.hours = this.timer.minutes = '00';
-                            return;
-                        }
-                        this.findNextEvent();
-                        return;
+                    // 活動倒數
+                    const eventDeadline = new Date(this.currentEvent.date).getTime();
+                    const eventDiff = eventDeadline - now;
+                    this.timer = this.calcTime(eventDiff);
+
+                    // 招工倒數
+                    if (this.currentEvent.recruitDeadline) {
+                        const recruitDeadline = new Date(this.currentEvent.recruitDeadline).getTime();
+                        const recruitDiff = recruitDeadline - now;
+                        this.recruitTimer = this.calcTime(recruitDiff);
                     }
+                },
 
-                    this.timer.days = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-                    this.timer.hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-                    this.timer.minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                calcTime(diff) {
+                    if (diff <= 0) return { days: '00', hours: '00', minutes: '00' };
+                    return {
+                        days: Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0'),
+                        hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0'),
+                        minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0')
+                    };
                 }
             }));
         });
